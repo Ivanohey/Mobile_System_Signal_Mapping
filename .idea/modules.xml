@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SignalMappingApp.iml" filepath="$PROJECT_DIR$/.idea/modules/SignalMappingApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SignalMappingApp.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SignalMappingApp.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SignalMappingApp.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SignalMappingApp.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SignalMappingApp.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SignalMappingApp.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SignalMappingApp.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SignalMappingApp.app.unitTest.iml" />
+    </modules>
+  </component>
+</project>
