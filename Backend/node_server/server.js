@@ -12,7 +12,6 @@ app.get('/records', (req, res) =>{
   //console.log(getRecords.getAllRecords())
   console.log(getLocations.getAllRecords())
   res.send(getLocations.getAllRecords())
-
 })
 
 app.post('/records', (req, res) => {

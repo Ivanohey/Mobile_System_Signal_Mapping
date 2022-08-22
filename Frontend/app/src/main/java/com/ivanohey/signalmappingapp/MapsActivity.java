@@ -11,9 +11,15 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
@@ -50,6 +56,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+
+
     }
 
     /**
@@ -63,9 +71,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        //Get the bundle
+        Bundle bundle = getIntent().getExtras();
+        String currentCoordinates = bundle.getString("coordinates");
+        //double currentLatitude = Double.parseDouble(bundle.getString("coordinates"));
+        String latLong[] = currentCoordinates.split(", ");
+        double currentLatitude = Double.parseDouble(latLong[0]);
+        double currentLongitude = Double.parseDouble(latLong[1]);
         mMap = googleMap;
-        LatLng geneva = new LatLng(46.221011, 6.1453324);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(geneva,19));
+        LatLng currentLocationMarker = new LatLng(currentLatitude, currentLongitude);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocationMarker,18));
+        //Get the bundle
+
+        getAllRecords();
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
         getAllRecords();
     }
 
@@ -119,8 +142,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-
-
     //Request to get all records
     public JsonObjectRequest recordsJsonObjectRequest = new JsonObjectRequest(Request.Method.GET, BACKEND_URL + "/records", null,new Response.Listener<JSONObject>() {
         @Override
@@ -137,10 +158,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }, new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-
-            //Solve issue here: ERROR RESPONSE OF SERVER: org.json.JSONException: Value GET of type java.lang.String cannot be converted to JSONObject
-            Log.d("ERROR RESPONSE OF SERVER", error.getMessage());
-
+            try {
+                if (error instanceof TimeoutError) {
+                    Log.e("Request error", error.getMessage());
+                } else if(error instanceof NoConnectionError){
+                    Log.e("Request error", error.getMessage());
+                } else if (error instanceof AuthFailureError) {
+                    Log.e("Request error", error.getMessage());
+                } else if (error instanceof ServerError) {
+                    Log.e("Request error", error.getMessage());
+                } else if (error instanceof NetworkError) {
+                    Log.e("Request error", error.getMessage());
+                } else if (error instanceof ParseError) {
+                    Log.e("Request error", error.getMessage());
+                }else{
+                    Log.e("Request error", "Unknown error");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     });
 

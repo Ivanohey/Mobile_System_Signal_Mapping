@@ -43,8 +43,6 @@ import static android.telephony.TelephonyManager.NETWORK_TYPE_UMTS;
 
 import static com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -75,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private String signalType;
 
     private TextView coordinatesText;
+    private String coordinatesString;
     private String coordinates;
 
     //Required variables for permissions
@@ -89,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     protected LocationListener locationListener;
     protected LocationRequest locationRequest;
     private FusedLocationProviderClient fusedLocationClient;
-    private int LOCATION_REFRESH_TIME = 5000; // 15 seconds to update
+    private int LOCATION_REFRESH_TIME = 3000; // 15 seconds to update
     private int LOCATION_REFRESH_DISTANCE = 500; // 500 meters to update
     private boolean requestingLocationUpdates;
     private String latitude;
@@ -155,8 +154,8 @@ public class MainActivity extends AppCompatActivity {
 
         //We create the locationRequest used to set up intervals and accuray of the location updates
         locationRequest = LocationRequest.create();
-        locationRequest.setInterval(5000);
-        locationRequest.setFastestInterval(5000);
+        locationRequest.setInterval(2000);
+        locationRequest.setFastestInterval(2000);
         locationRequest.setPriority(PRIORITY_HIGH_ACCURACY);
 
         //We ask for permission for coordinates
@@ -189,6 +188,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent goToMapsIntent = new Intent(MainActivity.this, MapsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("coordinates", MainActivity.this.coordinates);
+                goToMapsIntent.putExtras(bundle);
                 startActivity(goToMapsIntent);
             }
         });
@@ -223,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
         coordinatesText = findViewById(R.id.gpsCoordinatesText);
         getCoordinates();
         checkSettingsAndStartLocationUpdates();
-        coordinatesText.setText(coordinates);
+        coordinatesText.setText(coordinatesString);
     }
 
     @Override
@@ -364,14 +366,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public String processCoordinates(int error){
-        this.coordinates = "Error "+error+": Coordinates unknown";
+        this.coordinatesString = "Error "+error+": Coordinates unknown";
         return "Error "+error+": Coordinates unknown";
     }
 
     public String processCoordinates(String latitude, String longitude){
         String coordinates;
         coordinates ="Coordinates: \n" + latitude + ", \n" + longitude;
-        this.coordinates = coordinates;
+        this.coordinatesString = coordinates;
+        this.coordinates = latitude +", "+ longitude;
         return coordinates;
     }
 
