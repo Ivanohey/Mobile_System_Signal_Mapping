@@ -1,0 +1,88 @@
+{
+  "records": [
+    {
+      "latitude": "46.221011",
+      "longitude": "6.1453324",
+      "provider": "Salt",
+      "network": "4G"
+    },
+    {
+      "latitude": "46.2209065",
+      "longitude": "6.145943",
+      "provider": "Salt",
+      "network": "4G"
+    },
+    {
+      "latitude": "46.2205999",
+      "longitude": "6.1454219",
+      "provider": "Salt",
+      "network": "4G"
+    },
+    {
+      "latitude": "46.2200662",
+      "longitude": "6.1453081",
+      "provider": "Salt",
+      "network": "4G"
+    },
+    {
+      "latitude": "46.2201566",
+      "longitude": "6.144677",
+      "provider": "Salt",
+      "network": "4G"
+    },
+    {
+      "latitude": "46.2202846",
+      "longitude": "6.1441139",
+      "provider": "Salt",
+      "network": "4G"
+    },
+    {
+      "latitude": "46.2204191",
+      "longitude": "6.1435689",
+      "provider": "Salt",
+      "network": "4G"
+    },
+    {
+      "latitude": "46.2205087",
+      "longitude": "6.1429831",
+      "provider": "Salt",
+      "network": "4G"
+    },
+    {
+      "latitude": "46.2206261",
+      "longitude": "6.1424032",
+      "provider": "Salt",
+      "network": "4G"
+    },
+    {
+      "latitude": "46.2207269",
+      "longitude": "6.1418389",
+      "provider": "Salt",
+      "network": "4G"
+    },
+    {
+      "latitude": "46.2208769",
+      "longitude": "6.1412682",
+      "provider": "Salt",
+      "network": "4G"
+    },
+    {
+      "latitude": "46.2208537",
+      "longitude": "6.1407106",
+      "provider": "Salt",
+      "network": "4G"
+    },
+    {
+      "latitude": "46.220347",
+      "longitude": "6.1405065",
+      "provider": "Salt",
+      "network": "4G"
+    },
+    {
+      "latitude": "46.2210112",
+      "longitude": "6.1455463",
+      "provider": "Salt",
+      "network": "4G"
+    }
+  ]
+}

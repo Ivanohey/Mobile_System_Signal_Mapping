@@ -5,20 +5,20 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.SettingInjectorService;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.os.Looper;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -43,6 +43,8 @@ import static android.telephony.TelephonyManager.NETWORK_TYPE_UMTS;
 
 import static com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -51,13 +53,19 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
-import com.google.android.gms.location.Priority;
 import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.ivanohey.signalmappingapp.SaveCoordinatesService.LocalBinder;
 
 public class MainActivity extends AppCompatActivity {
+
+    //We create an instance of SaveCoordinatesService that we use in saveCoordinatesServiceConnection class
+    SaveCoordinatesService saveCoordinatesService = new SaveCoordinatesService();
+    boolean serviceIsConnected = false;
+
+    //Interface variables
     private Button openMapButton;
 
     private TextView providerNameText;
@@ -69,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView coordinatesText;
     private String coordinates;
 
+    //Required variables for permissions
     private TelephonyManager telephonyManager;
 
     private int networkType;
@@ -83,8 +92,16 @@ public class MainActivity extends AppCompatActivity {
     private int LOCATION_REFRESH_TIME = 5000; // 15 seconds to update
     private int LOCATION_REFRESH_DISTANCE = 500; // 500 meters to update
     private boolean requestingLocationUpdates;
+    private String latitude;
+    private String longitude;
 
+    //Interface elements of saveCoordinatesService
+    private TextView saveCoordText;
+
+
+    //Callback method extracting location updates
     LocationCallback locationCallback = new LocationCallback(){
+        @RequiresPermission(allOf = {Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
         @Override
         public void onLocationResult(@NonNull LocationResult locationResult) {
             if (locationResult == null) {
@@ -92,18 +109,55 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             for (Location location : locationResult.getLocations()) {
-                String latitude = String.valueOf(location.getLatitude());
-                String longitude = String.valueOf(location.getLongitude());
+                latitude = String.valueOf(location.getLatitude());
+                longitude = String.valueOf(location.getLongitude());
                 coordinatesText.setText(processCoordinates(latitude, longitude));
+
+                //We update the other data
+                signalType = getSignalType();
+                signalTypeText.setText("Signal Type: " + signalType);
+                providerName = getProviderName();
+                providerNameText.setText(("Provider: "+providerName));
+
+                //We use this method to call the SaveCoordinatesService and send data to backend using HTTP POST method
+                sendRecord();
+
             }
         }
     };
 
+    public void sendRecord(){
+        //Here we call method to push to backend
+        saveCoordinatesService.createJSONObjectRequest(latitude, longitude, providerName, signalType);
+        saveCoordinatesService.sendRecord();
+    }
+
+    /** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection saveCoordinatesServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            //We get instance of the connection
+            LocalBinder binder = (LocalBinder) service;
+            saveCoordinatesService = binder.getBoundService();  //We create the instance of the service
+            serviceIsConnected = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            serviceIsConnected = false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //We create the locationRequest used to set up intervals and accuray of the location updates
+        locationRequest = LocationRequest.create();
+        locationRequest.setInterval(5000);
+        locationRequest.setFastestInterval(5000);
+        locationRequest.setPriority(PRIORITY_HIGH_ACCURACY);
 
         //We ask for permission for coordinates
         ActivityResultLauncher<String[]> locationPermissionRequest =
@@ -111,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
                             Boolean fineLocationGranted = result.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false);
                             Boolean coarseLocationGranted = result.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION,false);
                             Boolean readPhoneStateGranted = result.getOrDefault(Manifest.permission.READ_PHONE_STATE, false);
+                            Boolean accessInternet = result.getOrDefault(Manifest.permission.INTERNET, false);
                             if (fineLocationGranted != null && fineLocationGranted) {
                                 // Precise location access granted.
                             } else if (coarseLocationGranted != null && coarseLocationGranted) {
@@ -124,7 +179,8 @@ public class MainActivity extends AppCompatActivity {
         locationPermissionRequest.launch(new String[] {
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.READ_PHONE_STATE
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.INTERNET
         });
 
         //Set button logic
@@ -136,12 +192,51 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(goToMapsIntent);
             }
         });
-        locationRequest = LocationRequest.create();
-        locationRequest.setInterval(4000);
-        locationRequest.setFastestInterval(2000);
-        locationRequest.setPriority(PRIORITY_HIGH_ACCURACY);
+        saveCoordText = findViewById(R.id.saveCoordStatusTextView);
+        saveCoordText.setText(saveCoordinatesService.showServiceStatus());
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //Bind to SaveCoordinatesService
+        Intent intent = new Intent(this, SaveCoordinatesService.class);
+        bindService(intent, saveCoordinatesServiceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    //Updates all values once
+    @RequiresPermission(allOf = {Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        //Set the provider name logic
+        providerNameText = findViewById(R.id.providerName);
+        providerName = getProviderName();
+        providerNameText.setText("Provider: " + providerName);
+
+        //Set the signal type logic
+        signalTypeText = findViewById(R.id.signalType);
+        signalType = getSignalType();
+        signalTypeText.setText("Signal Type: " + signalType);
+
+        //Set the coordinates logic
+        coordinatesText = findViewById(R.id.gpsCoordinatesText);
+        getCoordinates();
+        checkSettingsAndStartLocationUpdates();
+        coordinatesText.setText(coordinates);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopLocationUpdates();
+        unbindService(saveCoordinatesServiceConnection);
+    }
 
     private void checkSettingsAndStartLocationUpdates(){
         LocationSettingsRequest request = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest).build();
@@ -167,7 +262,6 @@ public class MainActivity extends AppCompatActivity {
                         ex.printStackTrace();
                     }
                 }
-
             }
         });
     }
@@ -180,50 +274,10 @@ public class MainActivity extends AppCompatActivity {
         fusedLocationClient.removeLocationUpdates(locationCallback);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    //Updates all values once
-    @RequiresPermission(allOf = {Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
-        //Set the provider name logic
-        providerNameText = findViewById(R.id.providerName);
-        providerName = getProviderName();
-        providerNameText.setText("Provider: " + providerName);
-
-        //Set the signal type logic
-        signalTypeText = findViewById(R.id.signalType);
-        signalType = getSignalType();
-        signalTypeText.setText("Signal Type: " + signalType);
-
-        //Set the coordinates logic
-        coordinatesText = findViewById(R.id.gpsCoordinatesText);
-        getCoordinates();
-        checkSettingsAndStartLocationUpdates();
-        coordinatesText.setText(coordinates);
-
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        stopLocationUpdates();
-    }
-
     //Get the type of network connection and return String with type of Data connection
     @RequiresPermission(allOf = {Manifest.permission.READ_PHONE_STATE})
     public String getSignalType() {
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, PackageManager.PERMISSION_GRANTED);
+        //ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, PackageManager.PERMISSION_GRANTED);
         //If permission was granted
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
             telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
@@ -249,14 +303,12 @@ public class MainActivity extends AppCompatActivity {
                 case NETWORK_TYPE_NR:
                     return "5G";
                 default:
-                    return "Unknown";
+                    return "None";
             }
-            //Need to call method to save coordinates + quality of connection + network provider
         }
         //If permission has to be granted
         else{
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_PERMISSION_PHONE);
-            return "Unknown";
+            return "No permission";
         }
     }
 
@@ -271,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
                 signalTypeText.setText("Signal Type: " + signalType);
             }
             else {
-                signalTypeText.setText("Signal Type: Unknown");
+                signalTypeText.setText("Signal Type: None");
             }
         }
     }
@@ -279,7 +331,12 @@ public class MainActivity extends AppCompatActivity {
     //Get the providers name and returns it
     public String getProviderName(){
         TelephonyManager telephonyManager = ((TelephonyManager) this.getSystemService(MainActivity.this.TELEPHONY_SERVICE));
-        return telephonyManager.getNetworkOperatorName();
+        if(telephonyManager.getNetworkOperatorName() == ""){
+            return "None";
+        }
+        else{
+            return telephonyManager.getNetworkOperatorName();
+        }
     }
 
     //Gets GPS coordinates of the phone and returns them as a String
@@ -299,12 +356,12 @@ public class MainActivity extends AppCompatActivity {
                         }
                         else{
                             //Overloaded processCoordinates() made for error situation where coordinates are null
+                            Log.d("Coordinates result","Permission not granted");
                             processCoordinates(-1);
                         }
                     }
                 });
     }
-
 
     public String processCoordinates(int error){
         this.coordinates = "Error "+error+": Coordinates unknown";
@@ -317,12 +374,6 @@ public class MainActivity extends AppCompatActivity {
         this.coordinates = coordinates;
         return coordinates;
     }
-
-    //Refreshes all the data (coordinates, provider name, data type)
-    public void refreshAllData(){
-        //Trouver une logique pour rafraichir les informations sur la 4G + provider (refresh en même temps que les coordonnées)
-    }
-
 
 
 
