@@ -43,7 +43,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
-    protected String BACKEND_URL = "https://cda0-129-194-90-8.eu.ngrok.io";
+    protected String BACKEND_URL = "https://85dd-196-188-40-13.in.ngrok.io";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +103,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String longitude;
         String provider;
         String network;
+        String strength;
         try{
             JSONArray records = response.getJSONArray("records");
             Log.i("JSON ARRAY", records.toString());
@@ -111,6 +112,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 longitude = records.getJSONObject(i).getString("longitude");
                 provider = records.getJSONObject(i).getString("provider");
                 network = records.getJSONObject(i).getString("network");
+                strength = records.getJSONObject(i).getString("strength");
 
                 int icon;
 
@@ -131,7 +133,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
                 //We create marker for every record
                 mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude)))
-                                .title(provider + " - " +network)
+                                .title(provider + " - " +network + " - " + strength)
                                 .icon(BitmapFromVector(getApplicationContext(), icon)))
                         .setAlpha(0.5f);
             }

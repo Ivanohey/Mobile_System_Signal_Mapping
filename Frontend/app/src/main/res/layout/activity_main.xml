@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.ivanohey.signalmappingapp.MainActivity"
-        tools:layout_editor_absoluteX="-86dp"
-        tools:layout_editor_absoluteY="-160dp">
+        tools:layout_editor_absoluteX="65dp"
+        tools:layout_editor_absoluteY="140dp">
 
     </RelativeLayout>
 
@@ -36,7 +36,6 @@
         android:text="Provider: "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.403"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:layout_constraintVertical_bias="0.146" />
@@ -48,7 +47,6 @@
         android:text="Signal Type: "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.427"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/providerName"
         app:layout_constraintVertical_bias="0.042" />
@@ -60,7 +58,6 @@
         android:text="Location: "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.402"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signalType"
         app:layout_constraintVertical_bias="0.048" />
@@ -96,7 +93,6 @@
         android:text="Signal Strength"
         app:layout_constraintBottom_toTopOf="@+id/openMapButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.446"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gpsCoordinatesText"
         app:layout_constraintVertical_bias="0.161" />

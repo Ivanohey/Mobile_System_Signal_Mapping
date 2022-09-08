@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SaveCoordinatesService extends Service {
-    String url = "https://cda0-129-194-90-8.eu.ngrok.io";
+    String url = "https://85dd-196-188-40-13.in.ngrok.io";
     JSONObject requestObject = new JSONObject();
 
     //We create LocalBinder instance
@@ -49,13 +49,17 @@ public class SaveCoordinatesService extends Service {
         queue.add(createRequest());
     }
 
-    public void createJSONObjectRequest(String latitude, String longitude, String provider, String networkType) {
+    public void createJSONObjectRequest(String latitude, String longitude, String provider, String networkType, String signalStrength) {
         try {
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("latitude", latitude);
             jsonBody.put("longitude", longitude);
             jsonBody.put("provider", provider);
             jsonBody.put("network", networkType);
+
+            //Comment if stops working
+            jsonBody.put("strength", signalStrength);
+
             this.requestObject = jsonBody;
             Log.d("JSON object created: ", jsonBody.toString());
 

@@ -4,475 +4,561 @@
       "latitude": "46.221011",
       "longitude": "6.1453324",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.2209065",
       "longitude": "6.145943",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.2205999",
       "longitude": "6.1454219",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.2200662",
       "longitude": "6.1453081",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.2201566",
       "longitude": "6.144677",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.2202846",
       "longitude": "6.1441139",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.2204191",
       "longitude": "6.1435689",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.2205087",
       "longitude": "6.1429831",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.2206261",
       "longitude": "6.1424032",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.2207269",
       "longitude": "6.1418389",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.2208769",
       "longitude": "6.1412682",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.2208537",
       "longitude": "6.1407106",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.220347",
       "longitude": "6.1405065",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.2210112",
       "longitude": "6.1455463",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "47.3674036",
       "longitude": "8.5335315",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.2210173",
       "longitude": "6.1455462",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "47.3674087",
       "longitude": "8.5335642",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.2210156",
       "longitude": "6.1455434",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "43.3439562",
       "longitude": "5.4410011",
       "provider": "Orange F",
-      "network": "2G"
+      "network": "2G",
+      "strength": "Average"
     },
     {
       "latitude": "46.2210119",
       "longitude": "6.1455473",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "43.3439317",
       "longitude": "5.4410687",
       "provider": "Orange F",
-      "network": "3G"
+      "network": "3G",
+      "strength": "Average"
     },
     {
       "latitude": "46.2210135",
       "longitude": "6.1455542",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "43.3439299",
       "longitude": "5.4410864",
       "provider": "Orange F",
-      "network": "3G"
+      "network": "3G",
+      "strength": "Average"
     },
     {
       "latitude": "46.2210043",
       "longitude": "6.1455467",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "43.3439445",
       "longitude": "5.4410445",
       "provider": "Orange F",
-      "network": "3G"
+      "network": "3G",
+      "strength": "Average"
     },
     {
       "latitude": "46.221017",
       "longitude": "6.145555",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "47.3662537",
       "longitude": "8.5327902",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "47.3668012",
       "longitude": "8.5332826",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "47.3673881",
       "longitude": "8.5340174",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "47.3678877",
       "longitude": "8.5351951",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "47.3680648",
       "longitude": "8.5358858",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "47.3684257",
       "longitude": "8.5366778",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "47.3689746",
       "longitude": "8.5377523",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "47.369414",
       "longitude": "8.5383769",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.2210187",
       "longitude": "6.1455526",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "47.3697192",
       "longitude": "8.5386575",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.2210239",
       "longitude": "6.1455513",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "47.3698124",
       "longitude": "8.5388385",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "47.3703129",
       "longitude": "8.5389987",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "47.3710147",
       "longitude": "8.53863",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "47.3716499",
       "longitude": "8.5383745",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "47.3723141",
       "longitude": "8.5381623",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "47.3729554",
       "longitude": "8.5381087",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "47.3734968",
       "longitude": "8.5381849",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "47.3740123",
       "longitude": "8.5383262",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "47.3745398",
       "longitude": "8.5385954",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "47.3751097",
       "longitude": "8.5389177",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "47.3759189",
       "longitude": "8.5392868",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.2210191",
       "longitude": "6.1455432",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "43.5442456",
       "longitude": "5.4478146",
       "provider": "Orange F",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.2210139",
       "longitude": "6.1455456",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.19444",
       "longitude": "6.14975",
       "provider": "Android",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.2210131",
       "longitude": "6.1455505",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.9489194",
       "longitude": "7.4381377",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.828898",
       "longitude": "7.1700239",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.1761036",
       "longitude": "6.1403338",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "43.6974667",
       "longitude": "7.2560783",
       "provider": "Orange F",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "43.5690144",
       "longitude": "7.0836989",
       "provider": "Orange F",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.1764861",
       "longitude": "6.1400295",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.19444",
       "longitude": "6.14975",
       "provider": "Android",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.1765946",
       "longitude": "6.1399076",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.19444",
       "longitude": "6.14975",
       "provider": "Android",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.1765531",
       "longitude": "6.1398987",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.19444",
       "longitude": "6.14975",
       "provider": "Android",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.1765443",
       "longitude": "6.1398958",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.19444",
       "longitude": "6.14975",
       "provider": "Android",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.1765828",
       "longitude": "6.1398991",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.19444",
       "longitude": "6.14975",
       "provider": "Android",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.1765887",
       "longitude": "6.1399037",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.19444",
       "longitude": "6.14975",
       "provider": "Android",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.1765817",
       "longitude": "6.1399079",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.19444",
       "longitude": "6.14975",
       "provider": "Android",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.1765795",
       "longitude": "6.1399081",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.19444",
       "longitude": "6.14975",
       "provider": "Android",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.1765791",
       "longitude": "6.1399092",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.19444",
       "longitude": "6.14975",
       "provider": "Android",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.1765857",
       "longitude": "6.139908",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.19444",
       "longitude": "6.14975",
       "provider": "Android",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
     },
     {
       "latitude": "46.1765881",
       "longitude": "6.1399082",
       "provider": "Salt",
-      "network": "4G"
+      "network": "4G",
+      "strength": "No data"
+    },
+    {
+      "latitude": "8.9830766",
+      "longitude": "38.7971053",
+      "provider": "ETH MTN",
+      "network": "2G",
+      "strength": "Excellent"
     }
   ]
 }

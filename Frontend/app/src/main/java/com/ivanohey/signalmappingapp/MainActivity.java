@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView signalStrengthText;
     int mSignalStrength;
+    private String strengthLevel;
 
 
     //Variables used for refresh of location
@@ -127,6 +128,10 @@ public class MainActivity extends AppCompatActivity {
             mSignalStrength = (2 * mSignalStrength) - 113; // -> dBm
             setmSignalStrength(mSignalStrength);
         }
+    }
+
+    public void setStrengthLevel(String strengthLevel) {
+        this.strengthLevel = strengthLevel;
     }
 
     public void setmSignalStrength(int mSignalStrength) {
@@ -161,8 +166,8 @@ public class MainActivity extends AppCompatActivity {
     };
 
     public void sendRecord(){
-        //Here we call method to push to backend
-        saveCoordinatesService.createJSONObjectRequest(latitude, longitude, providerName, signalType);
+        //Here we call method to push to backend  ---- Change last argument if doesn't work
+        saveCoordinatesService.createJSONObjectRequest(latitude, longitude, providerName, signalType, strengthLevel);
         saveCoordinatesService.sendRecord();
     }
 
@@ -243,25 +248,47 @@ public class MainActivity extends AppCompatActivity {
                 CellInfoWcdma cellinfo = (CellInfoWcdma) telephonyManager.getAllCellInfo().get(0);
                 CellSignalStrengthWcdma cellSignalStrengthWcdma = cellinfo.getCellSignalStrength();
                 mSignalStrength = cellSignalStrengthWcdma.getDbm();
-                signalStrengthText.setText(mSignalStrength + " dBm");
+                //signalStrengthText.setText(mSignalStrength + " dBm");
+                setStrengthLevel(convertStrength(mSignalStrength));
+                signalStrengthText.setText("Strength: "+ strengthLevel);
+
             }
             else if (telephonyManager.getAllCellInfo().get(0) instanceof android.telephony.CellInfoLte){
                 CellInfoLte cellinfo = (CellInfoLte) telephonyManager.getAllCellInfo().get(0);
                 CellSignalStrengthLte cellSignalStrengthLte = cellinfo.getCellSignalStrength();
                 mSignalStrength = cellSignalStrengthLte.getDbm();
-                signalStrengthText.setText(mSignalStrength + " dBm");
+                setStrengthLevel(convertStrength(mSignalStrength));
+                signalStrengthText.setText("Strength: "+ strengthLevel);
             }
             else if (telephonyManager.getAllCellInfo().get(0) instanceof android.telephony.CellInfoGsm){
                 CellInfoGsm cellinfo = (CellInfoGsm) telephonyManager.getAllCellInfo().get(0);
                 CellSignalStrengthGsm cellSignalStrengthGsm = cellinfo.getCellSignalStrength();
                 mSignalStrength = cellSignalStrengthGsm.getDbm();
-                signalStrengthText.setText(mSignalStrength + " dBm");
+                setStrengthLevel(convertStrength(mSignalStrength));
+                signalStrengthText.setText("Strength: "+ strengthLevel);
             }
         }
         catch(Exception e){
             Log.d("Error getting signal strength", e.getMessage());
             mSignalStrength = 0;
         }
+    }
+
+
+    public String convertStrength(int signalStrength){
+        if(signalStrength == 99){
+            return "No data";
+        }
+        else if (signalStrength >= -100) {
+            return "Excellent";
+        }
+        else if (signalStrength < -100 && signalStrength >= -110){
+            return "Average";
+        }
+        else if (signalStrength < -110){
+            return "Low";
+        }
+        else return "Undefined";
     }
 
 
