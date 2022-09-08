@@ -43,7 +43,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
-    protected String BACKEND_URL = "https://c040-178-197-239-156.eu.ngrok.io";
+    protected String BACKEND_URL = "https://cda0-129-194-90-8.eu.ngrok.io";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

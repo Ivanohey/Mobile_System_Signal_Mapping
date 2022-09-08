@@ -20,6 +20,17 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Looper;
+import android.telephony.CellInfo;
+import android.telephony.CellInfoCdma;
+import android.telephony.CellInfoGsm;
+import android.telephony.CellInfoLte;
+import android.telephony.CellInfoWcdma;
+import android.telephony.CellSignalStrengthCdma;
+import android.telephony.CellSignalStrengthGsm;
+import android.telephony.CellSignalStrengthLte;
+import android.telephony.CellSignalStrengthWcdma;
+import android.telephony.PhoneStateListener;
+import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
@@ -55,6 +66,7 @@ import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.ivanohey.signalmappingapp.SaveCoordinatesService.LocalBinder;
 
 public class MainActivity extends AppCompatActivity {
@@ -82,6 +94,10 @@ public class MainActivity extends AppCompatActivity {
     private int networkType;
     private int REQUEST_PERMISSION_PHONE;
 
+    private TextView signalStrengthText;
+    int mSignalStrength;
+
+
     //Variables used for refresh of location
     private int REQUEST_PERMISSION_LOCATION;
     protected LocationManager locationManager;
@@ -97,6 +113,25 @@ public class MainActivity extends AppCompatActivity {
     //Interface elements of saveCoordinatesService
     private TextView saveCoordText;
 
+
+    //Dialog
+    private int dialogOpened = 0;
+
+
+    class MyPhoneStateListener extends PhoneStateListener {
+
+        @Override
+        public void onSignalStrengthsChanged(SignalStrength signalStrength) {
+            super.onSignalStrengthsChanged(signalStrength);
+            mSignalStrength = signalStrength.getGsmSignalStrength();
+            mSignalStrength = (2 * mSignalStrength) - 113; // -> dBm
+            setmSignalStrength(mSignalStrength);
+        }
+    }
+
+    public void setmSignalStrength(int mSignalStrength) {
+        this.mSignalStrength = mSignalStrength;
+    }
 
     //Callback method extracting location updates
     LocationCallback locationCallback = new LocationCallback(){
@@ -146,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
             serviceIsConnected = false;
         }
     };
-
+    @RequiresPermission(allOf = {Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -196,7 +231,40 @@ public class MainActivity extends AppCompatActivity {
         });
         saveCoordText = findViewById(R.id.saveCoordStatusTextView);
         saveCoordText.setText(saveCoordinatesService.showServiceStatus());
+
+
+        //Get signal strength
+        telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        signalStrengthText = findViewById(R.id.signalStrength);
+
+        //Depending on the type of signal, the object returned from the telephonyManager has a different type
+        try{
+            if(telephonyManager.getAllCellInfo().get(0) instanceof android.telephony.CellInfoWcdma){
+                CellInfoWcdma cellinfo = (CellInfoWcdma) telephonyManager.getAllCellInfo().get(0);
+                CellSignalStrengthWcdma cellSignalStrengthWcdma = cellinfo.getCellSignalStrength();
+                mSignalStrength = cellSignalStrengthWcdma.getDbm();
+                signalStrengthText.setText(mSignalStrength + " dBm");
+            }
+            else if (telephonyManager.getAllCellInfo().get(0) instanceof android.telephony.CellInfoLte){
+                CellInfoLte cellinfo = (CellInfoLte) telephonyManager.getAllCellInfo().get(0);
+                CellSignalStrengthLte cellSignalStrengthLte = cellinfo.getCellSignalStrength();
+                mSignalStrength = cellSignalStrengthLte.getDbm();
+                signalStrengthText.setText(mSignalStrength + " dBm");
+            }
+            else if (telephonyManager.getAllCellInfo().get(0) instanceof android.telephony.CellInfoGsm){
+                CellInfoGsm cellinfo = (CellInfoGsm) telephonyManager.getAllCellInfo().get(0);
+                CellSignalStrengthGsm cellSignalStrengthGsm = cellinfo.getCellSignalStrength();
+                mSignalStrength = cellSignalStrengthGsm.getDbm();
+                signalStrengthText.setText(mSignalStrength + " dBm");
+            }
+        }
+        catch(Exception e){
+            Log.d("Error getting signal strength", e.getMessage());
+            mSignalStrength = 0;
+        }
     }
+
+
 
     @Override
     protected void onStart() {
@@ -204,6 +272,19 @@ public class MainActivity extends AppCompatActivity {
         //Bind to SaveCoordinatesService
         Intent intent = new Intent(this, SaveCoordinatesService.class);
         bindService(intent, saveCoordinatesServiceConnection, Context.BIND_AUTO_CREATE);
+
+        //Popup for consent
+        openDialog();
+        dialogOpened = 1;
+
+    }
+
+    //Consent dialog
+    public void openDialog() {
+        if(dialogOpened != 1){
+            ConsentDialog consentDialog = new ConsentDialog();
+            consentDialog.show(getSupportFragmentManager(), "example dialog");
+        }
     }
 
     //Updates all values once

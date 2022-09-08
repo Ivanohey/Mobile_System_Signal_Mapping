@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SaveCoordinatesService extends Service {
-    String url = "https://c040-178-197-239-156.eu.ngrok.io";
+    String url = "https://cda0-129-194-90-8.eu.ngrok.io";
     JSONObject requestObject = new JSONObject();
 
     //We create LocalBinder instance
